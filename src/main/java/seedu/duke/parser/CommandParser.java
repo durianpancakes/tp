@@ -1,13 +1,7 @@
 package seedu.duke.parser;
 
 import seedu.duke.event.EventManager;
-import seedu.duke.exception.CcaEmptyStringException;
-import seedu.duke.exception.CcaParamException;
-import seedu.duke.exception.InvalidClassInputException;
-import seedu.duke.exception.InvalidCommandException;
-import seedu.duke.exception.InvalidHelpCommandException;
-import seedu.duke.exception.TestEmptyStringException;
-import seedu.duke.exception.TestParamException;
+import seedu.duke.exception.*;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,12 +40,16 @@ public class CommandParser {
             System.out.println("☹ Oops! If you're trying to ask for help, simply enter 'help'!\n");
         } catch (InvalidCommandException e) {
             System.out.println("☹ Oops! I did not recognize that command! Enter 'help' if needed!");
+        } catch (EmptyCommandException ignored) {
+            // Temporary fix for empty command input
         }
         return commandType;
     }
 
-    private void extractCommand() throws InvalidCommandException {
-        if (separatedInputs.length == 1 && !separatedInputs[0].equals("help")
+    private void extractCommand() throws InvalidCommandException, EmptyCommandException {
+        if (separatedInputs[0].equals("")) {
+            throw new EmptyCommandException();
+        } else if (separatedInputs.length == 1 && !separatedInputs[0].equals("help")
                 && !separatedInputs[0].equals(INPUT_BYE)) {
             throw new InvalidCommandException();
         } else if (separatedInputs[0].equals("help")) {
@@ -78,8 +76,6 @@ public class CommandParser {
             commandType = CommandType.LIST;
         } else if (separatedInputs[MAIN_COMMAND_INDEX].equals(INPUT_BYE)) {
             commandType = CommandType.BYE;
-        } else {
-            throw new InvalidCommandException();
         }
     }
 
@@ -135,8 +131,6 @@ public class CommandParser {
             break;
         case BYE:
             break;
-        default:
-            // do nothing
         }
     }
 
