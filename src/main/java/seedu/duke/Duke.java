@@ -16,6 +16,8 @@ import seedu.duke.ui.UserInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Duke {
     public static final String EVENT_FILE_NAME = "/events.txt";
