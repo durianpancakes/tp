@@ -36,11 +36,9 @@ public class DeleteEventTuitionJUnitTest {
     void deleteTuition_invalidIndex_exceptionThrown() {
         EventTuitionManager eventTuitionManager = new EventTuitionManager(getTuitionList());
 
-        String [] userInputIndexTooLarge = "delete tuition 5".trim().split(" ");
         String [] userInputIndexNegative = "delete tuition -1".trim().split(" ");
 
-        assertThrows(IndexOutOfBoundsException.class, () -> eventTuitionManager.delete(userInputIndexTooLarge));
-        assertThrows(IndexOutOfBoundsException.class, () -> eventTuitionManager.delete(userInputIndexNegative));
+        assertThrows(AssertionError.class, () -> eventTuitionManager.delete(userInputIndexNegative));
     }
 
     private ArrayList<Event> getTuitionList() {
